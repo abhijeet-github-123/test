@@ -24,10 +24,12 @@ node {
         /* 
 			You would need to first register with DockerHub before you can push images to your account
 		*/
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
+        
+          docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials'
+           sh 'sudo docker login -u "abhijeetcse123" -p "#Abhijeet1997" docker.io'
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
-            } 
+             
                 echo "Trying to Push Docker Build to DockerHub"
     }
 }
