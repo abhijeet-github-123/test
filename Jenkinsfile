@@ -10,7 +10,7 @@ node {
     stage('Build image') {
         /* This builds the actual image */
 
-        app = docker.build("abhijeetcse123/test1")
+        app = docker.build("abhijeetcse123/test")
     }
 
     stage('Test image') {
