@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rchidana/NodeApp"
+    "url": "https://github.com/abhijeet-github-123/test"
   },
   "keywords": [
     "node",
     "docker",
     "dockerfile"
   ],
-  "author": "crudsinfotechng@gmail.com",
+  "author": "",
   "license": "ISC",
   "devDependencies": { "test": ">=0.6.0" }
 }
