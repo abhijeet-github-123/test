@@ -1,36 +1,119 @@
-node {
-    def app
+pipeline { 
 
-    stage('Clone repository') {
-        /* Cloning the Repository to our Workspace */
 
-        checkout scm
+
+    environment { 
+
+
+
+        registry = "abhijeetcse123/test" 
+
+
+
+        registryCredential = 'dockerhub_id' 
+
+
+
+        dockerImage = '' 
+
+
+
     }
 
-    stage('Build image') {
-        /* This builds the actual image */
 
-        app = docker.build("abhijeetcse123/test")
-    }
 
-    stage('Test image') {
-        
-        app.inside {
-            echo "Tests passed"
+    agent any 
+
+
+
+    stages { 
+
+
+
+        stage('Cloning our Git') { 
+
+
+
+            steps { 
+
+
+
+                git 'https://github.com/abhijeet-github-123/test.git'
+
+
+
+            }
+
+
+        } 
+
+
+
+        stage('Building our image') { 
+
+
+
+            steps { 
+
+
+
+                script { 
+
+
+
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
+
+                }
+
+
+
+            } 
+
+
+
         }
-    }
-  
-			      
-   stage('Push image') {
-        /* Finally, we'll push the image with two tags:
-         * First, the incremental build number from Jenkins
-         * Second, the 'latest' tag.
-         * Pushing multiple tags is cheap, as all the layers are reused.*/ 
-         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
-           sh 'sudo docker login -u "" -p "" docker.io'
-               
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
-        
-    }
-}
+
+
+
+        stage('Deploy our image') { 
+
+
+
+            steps { 
+
+
+
+                script { 
+
+
+
+                    docker.withRegistry( '', registryCredential ) { 
+
+
+
+                        dockerImage.push() 
+
+
+
+                    }
+
+
+
+                } 
+
+
+            }
+
+
+
+        } 
+
+
+            }
+
+        } 
+
+
+ 
+
+
